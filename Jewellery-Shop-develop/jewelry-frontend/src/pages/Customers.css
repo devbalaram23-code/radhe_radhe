@@ -1,0 +1,115 @@
+.page-customers {
+  padding: 20px;
+}
+
+.customers-container {
+  background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.customer-table thead {
+  background-color: #d4af37;
+  color: white;
+  font-weight: bold;
+}
+
+.customer-table tbody tr:hover {
+  background-color: #f0e5d0;
+  transition: background-color 0.3s ease;
+}
+
+.customer-table td,
+.customer-table th {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.customer-dialog {
+  border-radius: 8px;
+}
+
+.customer-details-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.customer-detail-item {
+  padding: 12px;
+  background-color: #fffbf0;
+  border-left: 4px solid #d4af37;
+  border-radius: 4px;
+}
+
+.customer-detail-label {
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.customer-detail-value {
+  color: #333;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #d4af37;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-buttons .btn-view {
+  background-color: #d4af37;
+  color: white;
+  border: none;
+}
+
+.action-buttons .btn-view:hover {
+  background-color: #c9a227;
+}
+
+.action-buttons .btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.action-buttons .btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.no-customers {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}

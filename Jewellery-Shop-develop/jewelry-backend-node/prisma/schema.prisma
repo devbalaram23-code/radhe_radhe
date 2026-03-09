@@ -1,0 +1,111 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id                    Int      @id @default(autoincrement())
+  productCode           String?  @unique
+  category              String?
+  gram                  Float?
+  carat                 Int?
+  perGramPrice          Float?
+  price                 Float?
+  createdDate           DateTime @default(now())
+  inStock               Boolean  @default(true)
+  deletedBy             String?
+  barcodeImage          Bytes?
+  barcodeImageMime      String?
+  barcodeImageFilename  String?
+  isAvailable           Boolean  @default(true)
+}
+
+model Bill {
+  id                    Int       @id @default(autoincrement())
+  billNumber            String    @unique
+  date                  String
+  customerName          String?
+  mobileNumber          String?
+  address               String?
+  gstin                 String?
+  customerId            Int?
+  subtotal              Float
+  cgst                  Float
+  sgst                  Float
+  totalGst              Float
+  roundOff              Float
+  grandTotal            Float
+  advanceApplied        Float     @default(0)
+  pdfData               Bytes?
+  pdfMime               String?
+  pdfFilename           String?
+  createdAt             DateTime  @default(now())
+  billItems             BillItem[]
+  customer              Customer? @relation(fields: [customerId], references: [id])
+  advanceUsages          AdvanceUsage[]
+}
+
+model Customer {
+  id                    Int       @id @default(autoincrement())
+  name                  String
+  mobileNumber          String?   @unique
+  address               String?
+  gstin                 String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  advances              Advance[]
+  bills                 Bill[]
+}
+
+model Advance {
+  id                    Int       @id @default(autoincrement())
+  customerId            Int
+  amount                Float
+  remainingAmount       Float
+  goldPrice             Float?
+  date                  String
+  remark                String?
+  paymentMode           String?
+  createdAt             DateTime  @default(now())
+  customer              Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  usages                AdvanceUsage[]
+}
+
+model AdvanceUsage {
+  id                    Int       @id @default(autoincrement())
+  advanceId             Int
+  billId                Int
+  amount                Float
+  createdAt             DateTime  @default(now())
+  advance               Advance   @relation(fields: [advanceId], references: [id], onDelete: Cascade)
+  bill                  Bill      @relation(fields: [billId], references: [id], onDelete: Cascade)
+}
+
+model BillItem {
+  id                    Int       @id @default(autoincrement())
+  billId                Int
+  productCode           String?
+  itemDescription       String
+  hsnCode               String?
+  purity                String?
+  grossWeight           Float?
+  stoneWeight           Float?
+  netGoldWeight         Float?
+  goldRatePerGram       Float?
+  goldValue             Float?
+  makingValue           Float?
+  makingCharge          Float?
+  otherCharges          Float?
+  oldGoldWeight         Float?
+  oldGoldPurity         String?
+  oldGoldPercent        Float?
+  oldGoldRatePerGram    Float?
+  oldGoldValue          Float?
+  remarks               String?
+  total                 Float?
+  bill                  Bill      @relation(fields: [billId], references: [id], onDelete: Cascade)
+}

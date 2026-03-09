@@ -1,0 +1,63 @@
+:root{
+  --bg: #FAF7F2; /* Main Background */
+  --header: #1E1E1E; /* Header / Sidebar */
+  --accent: #C9A14A; /* Primary Accent (Gold) */
+  --text: #333333; /* Text dark grey */
+  --header-foreground: #FAF7F2;
+  --card-bg: #FFFFFF;
+  --border-color: rgba(0, 0, 0, 0.12);
+  --hover-bg: rgba(201, 161, 74, 0.04);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  transition: background 220ms ease, color 220ms ease;
+}
+
+/* dark theme overrides when body has .dark class */
+body.dark {
+  --bg: #0b1220;
+  --header: #0f1a2a;
+  --accent: #D4AF37;
+  --text: #e6eef8;
+  --header-foreground: #e6eef8;
+  --card-bg: #1a2332;
+  --border-color: rgba(255, 255, 255, 0.12);
+  --hover-bg: rgba(201, 161, 74, 0.08);
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.input-box, select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.btn {
+  background: var(--accent);
+  color: var(--header-foreground);
+  padding: 10px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+}

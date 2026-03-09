@@ -1,0 +1,231 @@
+/* Minimal styling for Billing page */
+.billing-container {
+  max-width: 1000px;
+  margin: 16px auto;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: var(--text);
+}
+.billing-container h2, .billing-container h3 { margin: 8px 0; }
+.card { background: #ffffff; padding: 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+.billing-grid { display: grid; grid-template-columns: 1fr 420px; gap: 16px; }
+.left-panel, .right-panel { display: flex; flex-direction: column; gap: 12px; }
+.customer-section, .item-section, .bill-items, .summary { margin: 0; padding: 0; }
+.row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+.row label { width: 160px; font-weight: 600; }
+.row input, .row select { flex: 1; padding: 8px 10px; border: 1px solid #e3e7ee; border-radius: 6px; background: #fff; }
+.making-group { display:flex; gap:8px; align-items:center; }
+.btn { background: var(--accent); color: var(--header-foreground); border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+.btn.primary { background: var(--accent); }
+.btn.small { padding:4px 8px; font-size:12px; }
+.bill-table { width:100%; border-collapse:collapse; margin-top:8px; font-size:13px; }
+.bill-table thead { background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01)); }
+.bill-table th, .bill-table td { border:1px solid rgba(0,0,0,0.04); padding:8px 10px; text-align:left; }
+.remarks-cell { max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.text-right { text-align:right; }
+.summary .grand input { font-weight:700; font-size:1.05rem; }
+.actions { display:flex; gap:8px; margin-top:12px; }
+@media (max-width:980px){
+  .billing-grid { grid-template-columns: 1fr; }
+  .row { flex-direction:column; align-items:flex-start; }
+  .row label { width:100%; }
+}
+
+/* Page background and visual polish */
+/* Page uses global background from :root variables */
+
+.billing-container {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(21,32,64,0.08);
+}
+
+.card { background: rgba(255,255,255,0.98); padding: 16px; }
+
+/* Make TextField labels bigger and bold */
+.page-billing .MuiInputLabel-root {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+/* Adjust the shrunken label size when the field is focused or filled */
+.page-billing .MuiInputLabel-shrink {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+/* Make section headings bigger and bold */
+.page-billing .MuiTypography-h6 {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Making Charges subtitle */
+.page-billing .MuiTypography-subtitle2 {
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+.bill-items { overflow-x: auto; }
+.bill-table { min-width: 900px; }
+
+.bill-table tbody tr:hover { background: rgba(107,92,255,0.03); }
+
+.muted { color: #6b6f76; }
+
+.btn:hover { opacity: 0.95; transform: translateY(-1px); }
+
+/* Tighter mobile adjustments */
+@media (max-width:600px){
+  .bill-table { font-size:12px; }
+  .row label { font-size:13px; }
+  .btn.primary { padding:10px 14px; }
+}
+
+/* Override Material-UI container max-width for Billing page */
+@media (min-width: 1200px) {
+  .css-12siseb-MuiContainer-root {
+    max-width: 100% !important;
+  }
+}
+
+/* Dark mode enhancements for Billing page */
+body.dark .page-billing {
+  color: #ffffff;
+}
+
+body.dark .billing-container {
+  background: rgba(30, 35, 45, 0.95);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+body.dark .card {
+  background: rgba(50, 55, 65, 0.7);
+  border: 1px solid rgba(100, 110, 130, 0.3);
+}
+
+body.dark .page-billing .MuiInputLabel-root {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiInputBase-input {
+  background: rgba(50, 55, 65, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(100, 110, 130, 0.5) !important;
+}
+
+body.dark .page-billing .MuiInputBase-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark .page-billing .MuiInputBase-input:focus {
+  background: rgba(60, 65, 75, 0.9) !important;
+  border-color: var(--accent) !important;
+}
+
+body.dark .page-billing .MuiTypography-h6 {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiTypography-subtitle2 {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiMenuItem-root {
+  background: rgba(50, 55, 65, 0.8);
+  color: #ffffff;
+}
+
+body.dark .page-billing .MuiSelect-select {
+  background: rgba(50, 55, 65, 0.8) !important;
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiSelect-icon {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiPaper-root {
+  background: rgba(50, 55, 65, 0.7) !important;
+}
+
+body.dark .page-billing .MuiTable-root {
+  color: #ffffff;
+}
+
+body.dark .page-billing .MuiTableCell-root {
+  color: #ffffff;
+  border-color: rgba(100, 110, 130, 0.3);
+}
+
+body.dark .page-billing .MuiTableHead-root {
+  background: rgba(50, 55, 65, 0.6);
+}
+
+body.dark .page-billing .MuiTableBody-root tr:hover {
+  background: rgba(60, 65, 75, 0.4) !important;
+}
+
+body.dark .page-billing .MuiButton-contained {
+  background: rgba(107, 92, 255, 0.8) !important;
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiButton-outlined {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+body.dark .page-billing label {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Dark mode - force all Typography to be white in Bill Summary */
+body.dark .page-billing .MuiTypography-root {
+  color: #ffffff !important;
+}
+
+body.dark .page-billing .MuiBox-root {
+  color: #ffffff !important;
+}
+
+/* Ensure all text in paper is white */
+body.dark .page-billing .MuiPaper-root .MuiTypography-root {
+  color: #ffffff !important;
+}
+
+/* Force white on summary items */
+body.dark .page-billing .MuiPaper-root Typography {
+  color: #ffffff !important;
+}
+
+/* Dark mode - fix helper text and secondary text */
+body.dark .page-billing .MuiFormHelperText-root {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .page-billing [style*="color: 'gray'"],
+body.dark .page-billing div[style*="color: gray"] {
+  color: #ffffff !important;
+}
+
+body.dark [style*="color: gray"] {
+  color: #ffffff !important;
+}
+
+/* Make sure all secondary text is visible */
+body.dark .page-billing div {
+  color: #ffffff !important;
+}

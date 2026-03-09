@@ -1,0 +1,220 @@
+.landing {
+  text-align: center;
+  margin-top: 100px;
+  color: var(--text);
+  background: linear-gradient(135deg, #00BCD4 0%, #0097A7 50%, #0288D1 100%);
+  min-height: 100vh;
+  padding: 0;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 45px;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-weight: 700;
+}
+
+p {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.95);
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.landing h3 { margin-top: 28px; color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.1); font-weight: 600; }
+.landing h4 { margin: 8px 0; color: #ffffff; font-size: 1rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+
+/* Overview stats */
+.overview { max-width: 980px; margin: 28px auto 40px; padding: 0 18px; }
+.stats { display: flex; gap: 16px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+.stat-card {
+  min-width: 160px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.stat-value { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: #1a5f7a; }
+.stat-label { font-size: 13px; color: rgba(51,51,51,0.6); }
+
+.charts { padding-top: 6px; }
+.charts-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+.chart-wrap { min-width: 260px; }
+.muted { color: rgba(102,102,102,0.7); }
+
+/* Dark mode tweaks */
+body.dark .stat-card {
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  box-shadow: none;
+}
+body.dark .stat-label { color: rgba(230,238,248,0.7); }
+
+/* Dark mode - ensure all text is white */
+body.dark .landing,
+body.dark .landing h1,
+body.dark .landing h3,
+body.dark .landing h4,
+body.dark .landing p {
+  color: #ffffff !important;
+}
+
+body.dark .stat-card {
+  color: #ffffff !important;
+}
+
+body.dark .stat-value {
+  color: #ffffff !important;
+}
+
+body.dark .muted {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+/* Dark mode - fix pie chart legend text */
+body.dark .piechart div,
+body.dark .piechart span {
+  color: #ffffff !important;
+}
+
+/* Dark mode - Today's Rates section */
+body.dark .landing > div > div[style*="background: rgba(255,255,255,0.98)"] {
+  background: rgba(30, 35, 45, 0.95) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4) !important;
+}
+
+body.dark .landing label {
+  color: #ffffff !important;
+}
+
+body.dark .landing input[type="number"] {
+  background: rgba(50, 55, 65, 0.8) !important;
+  border: 1px solid rgba(100, 110, 130, 0.5) !important;
+  color: #ffffff !important;
+}
+
+body.dark .landing input[type="number"]::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark .landing input[type="number"]:focus {
+  background: rgba(60, 65, 75, 0.9) !important;
+  border-color: var(--accent) !important;
+  outline: none;
+}
+
+/* Dark mode - fix Today's Rates section text color */
+body.dark .overview h3 {
+  color: #ffffff !important;
+}
+
+body.dark .overview p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .overview div {
+  color: #ffffff !important;
+}
+
+/* Dark mode - enhanced Today's Rates section styling */
+body.dark .landing div[style*="maxWidth: 600"] {
+  background: rgba(40, 45, 55, 0.98) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+  border: 1px solid rgba(100, 110, 130, 0.3) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] h3 {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+body.dark .landing div[style*="maxWidth: 600"] label {
+  color: #e8eaf0 !important;
+  font-weight: 600 !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] p {
+  color: rgba(230, 235, 245, 0.8) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"] {
+  background: rgba(30, 35, 45, 0.9) !important;
+  border: 1.5px solid rgba(120, 130, 150, 0.5) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"]:hover {
+  border-color: rgba(150, 160, 180, 0.7) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"]:focus {
+  background: rgba(45, 50, 60, 0.95) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(107, 92, 255, 0.2) !important;
+}
+
+/* Dark mode - Live Market Prices section */
+body.dark .landing div[style*="maxWidth: 800"] {
+  background: rgba(40, 45, 55, 0.98) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+  border: 1px solid rgba(100, 110, 130, 0.3) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 800"] h3 {
+  color: #ffffff !important;
+}
+
+body.dark .landing div[style*="maxWidth: 800"] p {
+  color: rgba(230, 235, 245, 0.7) !important;
+}
+
+/* Dark mode - Enhanced Today's Rates section background and text */
+body.dark .landing div[style*="maxWidth: 600"] {
+  background: linear-gradient(145deg, rgba(35, 40, 50, 0.98), rgba(45, 50, 60, 0.95)) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 1px rgba(120, 130, 150, 0.2) !important;
+  border: 1px solid rgba(120, 130, 150, 0.4) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] h3 {
+  color: #f5f7fa !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+  font-weight: 700 !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] label {
+  color: #f0f2f5 !important;
+  font-weight: 600 !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] p {
+  color: rgba(220, 225, 235, 0.85) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"] {
+  background: rgba(25, 30, 40, 0.95) !important;
+  border: 2px solid rgba(130, 140, 160, 0.5) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"]:hover {
+  border-color: rgba(160, 170, 190, 0.7) !important;
+  background: rgba(30, 35, 45, 0.98) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"]:focus {
+  background: rgba(35, 40, 50, 0.98) !important;
+  border-color: rgba(107, 92, 255, 0.8) !important;
+  box-shadow: 0 0 0 4px rgba(107, 92, 255, 0.25), 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+body.dark .landing div[style*="maxWidth: 600"] input[type="number"]::placeholder {
+  color: rgba(200, 210, 225, 0.5) !important;
+}

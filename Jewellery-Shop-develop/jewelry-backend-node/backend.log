@@ -1,0 +1,5 @@
+
+> jewelry-backend-node@0.1.0 start
+> node src/index.js
+
+Node backend listening on 8080
