@@ -35,10 +35,13 @@
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
+  color: #222;
+  font-weight: 500;
 }
 
 .bill-info Typography {
   margin-bottom: 8px;
+  color: #222 !important;
 }
 
 .bill-totals {
@@ -46,6 +49,27 @@
   padding: 15px;
   border-radius: 8px;
   text-align: right;
+  color: #222;
+  font-weight: 500;
+}
+
+body.dark .bill-info {
+  background-color: #1a2a3a;
+  color: #f0f0f0 !important;
+}
+
+body.dark .bill-info Typography,
+body.dark .bill-info .MuiTypography-root {
+  color: #f0f0f0 !important;
+}
+
+body.dark .bill-totals {
+  background-color: #1a2a3a;
+  color: #f0f0f0 !important;
+}
+
+body.dark .bill-totals .MuiTypography-root {
+  color: #f0f0f0 !important;
 }
 
 .bill-totals Typography {
@@ -59,7 +83,8 @@ body.dark .sales-container {
 
 body.dark .sales-header h1,
 body.dark .sales-header .MuiTypography-root {
-  color: var(--text) !important;
+  color: #222 !important;
+  font-weight: 600;
 }
 
 /* Input fields in dark mode */
@@ -111,17 +136,27 @@ body.dark .sales-table .MuiTableContainer-root {
 }
 
 body.dark .sales-table .MuiTable-root {
-  color: var(--text) !important;
+  color: #e6e6e6 !important;
+  font-weight: 600;
 }
 
 body.dark .sales-table .MuiTableCell-root {
-  color: var(--text) !important;
+  color: #f0f0f0 !important;
   border-bottom-color: var(--border-color) !important;
+  font-weight: 500;
 }
 
 body.dark .sales-table .MuiTableHead-root .MuiTableCell-root {
   background-color: #0f1a2a;
-  color: var(--text) !important;
+  color: #e6ff00 !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+body.dark .sales-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
+  color: #f0f0f0 !important;
+  font-weight: 500;
 }
 
 body.dark .sales-table .MuiTableRow-root:hover {

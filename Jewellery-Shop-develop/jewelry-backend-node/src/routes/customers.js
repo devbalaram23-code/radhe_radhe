@@ -85,8 +85,22 @@ router.post('/', async (req, res) => {
       });
 
       if (existing) {
-        // Customer already exists, just return it
-        return res.json(existing);
+        // Customer already exists
+        if (existing.name.toLowerCase() !== name.toLowerCase()) {
+          // Different name, same mobile - this is a conflict
+          return res.status(409).json({
+            error: 'DUPLICATE_MOBILE',
+            message: `A customer with this mobile number already exists with the name "${existing.name}"`,
+            existingCustomer: existing,
+            conflict: true
+          });
+        }
+        // Same name and mobile - just return existing
+        return res.status(200).json({
+          ...existing,
+          isExisting: true,
+          message: 'Customer with this mobile number already exists'
+        });
       }
     }
 
@@ -110,7 +124,11 @@ router.post('/', async (req, res) => {
       }
     }
 
-    res.status(201).json(customer);
+    res.status(201).json({
+      ...customer,
+      isExisting: false,
+      message: 'New customer created successfully'
+    });
   } catch (error) {
     console.error('Error creating customer:', error);
     res.status(500).json({ error: 'Failed to create customer' });

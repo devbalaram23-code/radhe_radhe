@@ -6,6 +6,7 @@ const productsRouter = require('./routes/products');
 const billsRouter = require('./routes/bills');
 const customersRouter = require('./routes/customers');
 const advancesRouter = require('./routes/advances');
+const creditsRouter = require('./routes/credits');
 const prisma = require('./prismaClient');
 
 const app = express();
@@ -16,6 +17,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/bills', billsRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/advances', advancesRouter);
+app.use('/api/credits', creditsRouter);
 
 app.get("/", (req, res) => res.send("Jewelry Node backend is up"));
 

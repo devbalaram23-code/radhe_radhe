@@ -103,7 +103,7 @@ function AddProduct() {
 
   return (
     <>
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-right" richColors theme={darkMode ? 'dark' : 'light'} />
       <div className="full-screen page-addproduct">
       <div className="form-box">
         <h2>Add Product</h2>

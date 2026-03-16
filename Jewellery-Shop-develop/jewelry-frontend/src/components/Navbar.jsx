@@ -58,6 +58,7 @@ function Navbar() {
         <NavLink to="/inventory" className={linkClass}>Inventory</NavLink>
         <NavLink to="/billing" className={linkClass}>Billing</NavLink>
         <NavLink to="/advance" className={linkClass}>Advance</NavLink>
+        <NavLink to="/credits" className={linkClass}>Credits</NavLink>
         <NavLink to="/sales" className={linkClass}>Sales</NavLink>
         <NavLink to="/customers" className={linkClass}>Customers</NavLink>
       </div>

@@ -46,7 +46,8 @@ model Bill {
   createdAt             DateTime  @default(now())
   billItems             BillItem[]
   customer              Customer? @relation(fields: [customerId], references: [id])
-  advanceUsages          AdvanceUsage[]
+  advanceUsages         AdvanceUsage[]
+  credits               Credit[]
 }
 
 model Customer {
@@ -59,6 +60,7 @@ model Customer {
   updatedAt             DateTime  @updatedAt
   advances              Advance[]
   bills                 Bill[]
+  credits               Credit[]
 }
 
 model Advance {
@@ -108,4 +110,34 @@ model BillItem {
   remarks               String?
   total                 Float?
   bill                  Bill      @relation(fields: [billId], references: [id], onDelete: Cascade)
+}
+
+model Credit {
+  id                    Int       @id @default(autoincrement())
+  customerId            Int
+  billId                Int?
+  creditAmount          Float
+  remainingAmount       Float
+  committedPaymentDate  String
+  paymentStatus         String    @default("PENDING")
+  itemDescription       String?
+  notes                 String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  customer              Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  bill                  Bill?     @relation(fields: [billId], references: [id], onDelete: SetNull)
+  payments              CreditPayment[]
+}
+
+model CreditPayment {
+  id                    Int       @id @default(autoincrement())
+  creditId              Int
+  amountPaid            Float
+  paymentDate           String
+  paymentMode           String?
+  remarks               String?
+  createdAt             DateTime  @default(now())
+  
+  credit                Credit    @relation(fields: [creditId], references: [id], onDelete: Cascade)
 }

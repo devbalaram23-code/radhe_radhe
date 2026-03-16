@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
+import { useThemeMode } from '../ThemeContext';
 import {
   Container,
   Paper,
@@ -21,6 +22,7 @@ import { toast, Toaster } from 'sonner';
 
 function Advance() {
   const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:8080';
+  const { mode } = useThemeMode();
   const [customerSearchInput, setCustomerSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -92,16 +94,44 @@ function Advance() {
       });
 
       const customer = res.data;
+      
+      // Check for duplicate mobile with different name
+      if (res.status === 409 || customer?.conflict) {
+        toast.error(
+          `Duplicate found! "${customer.existingCustomer?.name}" already has this mobile. Using existing.`,
+          { duration: 4000 }
+        );
+      } else if (customer?.isExisting) {
+        toast.info(`Using existing customer: ${customer.name}`, { duration: 3000 });
+      } else {
+        toast.success('Customer created successfully', { duration: 3000 });
+      }
+
       setSelectedCustomer(customer);
       setNewCustomerName('');
       setNewCustomerMobile('');
       setNewCustomerAddress('');
       setNewCustomerGstin('');
-      toast.success('Customer created');
     } catch (error) {
       console.error('Failed to create customer:', error);
-      const msg = error?.response?.data?.error || error?.message || 'Failed to create customer';
-      toast.error(msg);
+      
+      // Handle 409 Conflict
+      if (error.response?.status === 409) {
+        const existing = error.response.data?.existingCustomer;
+        toast.error(
+          `Duplicate mobile! "${existing?.name}" already has this number. Using existing.`,
+          { duration: 4000 }
+        );
+        // Use the existing customer
+        setSelectedCustomer(existing);
+        setNewCustomerName('');
+        setNewCustomerMobile('');
+        setNewCustomerAddress('');
+        setNewCustomerGstin('');
+      } else {
+        const msg = error?.response?.data?.error || error?.message || 'Failed to create customer';
+        toast.error(msg, { duration: 3000 });
+      }
     } finally {
       setCreatingCustomer(false);
     }
@@ -176,7 +206,7 @@ function Advance() {
 
   return (
     <>
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-right" richColors theme={mode} />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
         <Paper sx={{ p: 3, borderRadius: 3 }} elevation={6}>
           <Typography variant="h4" gutterBottom>Advance Entry</Typography>

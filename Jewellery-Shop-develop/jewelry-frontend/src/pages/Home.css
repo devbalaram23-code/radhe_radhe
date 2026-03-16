@@ -37,6 +37,50 @@
   animation: scrollUp 4s ease-in-out infinite;
 }
 
+/* Dark Mode Support */
+body.dark .home-container {
+  background-color: #0f1a2a;
+  color: #f0f0f0;
+}
+
+body.dark .home-header {
+  color: #f0f0f0;
+}
+
+body.dark .market-prices-section {
+  background: linear-gradient(135deg, #1a3a2a 0%, #2a1a3a 100%) !important;
+  color: #f0f0f0;
+}
+
+/* Dark mode - target Material-UI cards */
+body.dark .MuiPaper-root {
+  background-color: #1a2a3a;
+  color: #f0f0f0;
+}
+
+body.dark .MuiCard-root {
+  background-color: #1a2a3a;
+  color: #f0f0f0;
+}
+
+body.dark .MuiTypography-root {
+  color: #f0f0f0;
+}
+
+body.dark .MuiBox-root {
+  color: #f0f0f0;
+}
+
+/* Dark mode - headers and titles */
+body.dark h1, body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+  color: #e6ff00;
+}
+
+/* Dark mode - general text elements */
+body.dark p, body.dark span, body.dark div {
+  color: #f0f0f0;
+}
+
 @media (max-width: 900px) {
   .home-container {
     padding: 1rem;

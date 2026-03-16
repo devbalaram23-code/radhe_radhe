@@ -113,3 +113,88 @@
   padding: 40px 20px;
   color: #999;
 }
+
+/* Dark Mode Support */
+body.dark .page-customers {
+  background-color: #0f1a2a;
+}
+
+body.dark .customers-container {
+  background: linear-gradient(135deg, #1a2a3a 0%, #253546 100%);
+  color: #f0f0f0;
+}
+
+body.dark .customer-table thead {
+  background-color: #d4af37;
+  color: #000;
+  font-weight: bold;
+}
+
+body.dark .customer-table tbody tr {
+  background-color: #1a2a3a;
+  color: #f0f0f0;
+}
+
+body.dark .customer-table tbody tr:hover {
+  background-color: #3a4a5a;
+}
+
+body.dark .customer-table td,
+body.dark .customer-table th {
+  color: #f0f0f0 !important;
+  border-bottom-color: #333;
+  font-weight: 500;
+}
+
+body.dark .customer-detail-item {
+  background-color: #0f1a2a;
+  border-left-color: #d4af37;
+}
+
+body.dark .customer-detail-label {
+  color: #e6ff00 !important;
+}
+
+body.dark .customer-detail-value {
+  color: #f0f0f0 !important;
+}
+
+body.dark .search-box input {
+  background-color: #253546;
+  color: #f0f0f0;
+  border-color: #d4af37;
+}
+
+body.dark .search-box input::placeholder {
+  color: #777;
+}
+
+body.dark .no-customers {
+  color: #888;
+}
+
+/* MUI Dialog Dark Mode */
+body.dark .MuiDialog-paper {
+  background-color: #1a2a3a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark .MuiDialogTitle-root {
+  background-color: #1a2a3a;
+  color: #e6ff00 !important;
+  font-weight: 600;
+}
+
+body.dark .MuiDialogContent-root {
+  background-color: #1a2a3a;
+  color: #f0f0f0;
+}
+
+body.dark .MuiDialogContent-root .MuiTypography-root {
+  color: #f0f0f0 !important;
+}
+
+body.dark .MuiDialogActions-root {
+  background-color: #1a2a3a;
+  border-top-color: #333;
+}

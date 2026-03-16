@@ -11,6 +11,8 @@ import Billing from "./pages/Billing";
 import Sales from "./pages/Sales";
 import Customers from "./pages/Customers";
 import Advance from "./pages/Advance";
+import Credits from "./pages/Credits";
+import CreditDetails from "./pages/CreditDetails";
 
 function AppContent() {
   const { mode } = useThemeMode();
@@ -29,6 +31,8 @@ function AppContent() {
           <Route path="/sales" element={<Sales />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/advance" element={<Advance />} />
+          <Route path="/credits" element={<Credits />} />
+          <Route path="/credit-details/:creditId" element={<CreditDetails />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

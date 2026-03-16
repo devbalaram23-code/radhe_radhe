@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import "../pages/Billing.css";
 import axios from 'axios';
 import BarcodeListener from '../components/BarcodeListener';
+import { useThemeMode } from '../ThemeContext';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -20,13 +21,23 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Autocomplete from '@mui/material/Autocomplete';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import { printInvoice, saveBillToStorage } from '../utils/invoice';
 import { toast, Toaster } from 'sonner';
 
 function Billing() {
   const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
+  const { mode } = useThemeMode();
   const [scannerActive, setScannerActive] = useState(true);
   const [isSaving, setIsSaving] = useState(false); // Prevent double-click
+
+  // Duplicate customer dialog state
+  const [duplicateCustomerDialog, setDuplicateCustomerDialog] = useState(false);
+  const [duplicateCustomerData, setDuplicateCustomerData] = useState(null);
+  const [duplicateCustomerPending, setDuplicateCustomerPending] = useState(false);
 
   // Customer details
   const [customerName, setCustomerName] = useState("");
@@ -118,7 +129,9 @@ function Billing() {
   // Select a customer from search results
   const handleSelectCustomer = (customer) => {
     setCustomerName(customer.name || "");
-    setMobileNumber(customer.mobileNumber || "");
+    // Strip +91 prefix if present to show only 10 digits in form
+    const mobileWithoutPrefix = String(customer.mobileNumber || "").replace(/\D/g, '').slice(-10);
+    setMobileNumber(mobileWithoutPrefix);
     setAddress(customer.address || "");
     setGstin(customer.gstin || "");
     setCustomerSearchInput("");
@@ -128,18 +141,69 @@ function Billing() {
 
   // Save customer to database
   const saveCustomerToDB = async (name, mobile, customerAddress, customerGstin) => {
+    // Define formattedMobile outside try-catch so it's accessible in both blocks
+    const formattedMobile = String(mobile).startsWith('+91') ? mobile : `+91${mobile}`;
+    
     try {
-      await axios.post(`${API_BASE}/api/customers`, {
+      const response = await axios.post(`${API_BASE}/api/customers`, {
         name,
-        mobileNumber: mobile,
+        mobileNumber: formattedMobile,
         address: customerAddress,
         gstin: customerGstin
       });
-      return true;
+
+      // Check if customer already exists with same mobile
+      if (response.data?.isExisting) {
+        toast.info(`Using existing customer: ${response.data.name}`, { duration: 3000 });
+        return { success: true, isExisting: true };
+      }
+
+      return { success: true, isExisting: false };
     } catch (error) {
+      // Handle 409 Conflict - duplicate mobile with different name
+      if (error.response?.status === 409) {
+        const existingCustomer = error.response.data?.existingCustomer;
+        return { 
+          success: false, 
+          isDuplicate: true, 
+          existingCustomer: existingCustomer
+        };
+      }
+
+      const errorMsg = error.response?.data?.error || error.message || 'Failed to save customer';
+      toast.error(errorMsg, { duration: 3000 });
       console.warn('Failed to save customer:', error.message || error);
-      return false;
+      return { success: false, isDuplicate: false };
     }
+  };
+
+  // Handle duplicate customer - show dialog
+  const handleDuplicateCustomer = (existingCustomer) => {
+    setDuplicateCustomerData(existingCustomer);
+    setDuplicateCustomerDialog(true);
+  };
+
+  // Use existing customer when duplicate is detected
+  const handleUseExistingCustomer = () => {
+    if (duplicateCustomerData) {
+      setCustomerName(duplicateCustomerData.name);
+      // Strip +91 prefix if present
+      const mobileWithoutPrefix = String(duplicateCustomerData.mobileNumber || "").replace(/\D/g, '').slice(-10);
+      setMobileNumber(mobileWithoutPrefix);
+      setAddress(duplicateCustomerData.address || "");
+      setGstin(duplicateCustomerData.gstin || "");
+      
+      toast.success(`Switched to existing customer: ${duplicateCustomerData.name}`);
+    }
+    setDuplicateCustomerDialog(false);
+    setDuplicateCustomerData(null);
+  };
+
+  // Cancel duplicate customer dialog
+  const handleCancelDuplicate = () => {
+    setDuplicateCustomerDialog(false);
+    setDuplicateCustomerData(null);
+    setDuplicateCustomerPending(false);
   };
 
   // handle barcode scanned by hardware scanner
@@ -470,8 +534,12 @@ function Billing() {
     }
 
     setIsSaving(true); // Disable button
+    setDuplicateCustomerPending(true); // Mark pending
     const billNumber = `INV-${Date.now()}`;
     const date = new Date().toLocaleDateString();
+    
+    // Format mobile number with +91 prefix
+    const formattedMobileNumber = String(mobileNumber).startsWith('+91') ? mobileNumber : `+91${mobileNumber}`;
     
     // Sort items to ensure old gold appears at the bottom
     const sortedItems = [...billItems].sort((a, b) => {
@@ -486,7 +554,7 @@ function Billing() {
       billNumber,
       date,
       customerName,
-      mobileNumber,
+      mobileNumber: formattedMobileNumber,
       address,
       gstin,
       paymentMode: paymentMode || undefined,
@@ -501,9 +569,24 @@ function Billing() {
     };
 
     try {
-      // Save customer to database if new
-      await saveCustomerToDB(customerName, mobileNumber, address, gstin);
+      // First, try to save customer to database
+      const customerResult = await saveCustomerToDB(customerName, mobileNumber, address, gstin);
       
+      // If duplicate customer detected, show dialog and STOP
+      if (customerResult.isDuplicate) {
+        setIsSaving(false);
+        handleDuplicateCustomer(customerResult.existingCustomer);
+        return; // Don't proceed with bill save
+      }
+
+      // If failed for other reason, stop
+      if (!customerResult.success) {
+        setIsSaving(false);
+        setDuplicateCustomerPending(false);
+        return;
+      }
+
+      // Only save bill if customer creation was successful and no duplicates
       await saveBillToStorage(data);
       toast.success('Bill saved successfully!');
       printInvoice(data);
@@ -521,6 +604,7 @@ function Billing() {
       console.error('Error saving bill:', error);
     } finally {
       setIsSaving(false); // Re-enable button
+      setDuplicateCustomerPending(false);
     }
   };
 
@@ -552,7 +636,7 @@ function Billing() {
 
   return (
     <>
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-right" richColors theme={mode} />
       <Container className="page-billing" maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
       <BarcodeListener onBarcode={handleBarcodeScanned} enabled={scannerActive} />
       <Paper sx={{ p: 3, borderRadius: 3 }} elevation={6}>
@@ -1063,6 +1147,42 @@ function Billing() {
         </Grid>
       </Paper>
     </Container>
+
+    {/* Duplicate Customer Dialog */}
+    <Dialog open={duplicateCustomerDialog} onClose={handleCancelDuplicate} maxWidth="sm" fullWidth>
+      <DialogTitle sx={{ backgroundColor: '#ff6b6b', color: 'white', fontWeight: 'bold' }}>
+        ⚠️ Duplicate Mobile Number Detected
+      </DialogTitle>
+      <DialogContent sx={{ mt: 2 }}>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          This mobile number <strong>{mobileNumber}</strong> is already registered with:
+        </Typography>
+        <Paper sx={{ p: 2, backgroundColor: '#f5f5f5', borderLeft: '4px solid #ff6b6b' }}>
+          <Typography variant="body2">
+            <strong>Name:</strong> {duplicateCustomerData?.name}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Mobile:</strong> {duplicateCustomerData?.mobileNumber}
+          </Typography>
+          {duplicateCustomerData?.address && (
+            <Typography variant="body2">
+              <strong>Address:</strong> {duplicateCustomerData.address}
+            </Typography>
+          )}
+        </Paper>
+        <Typography variant="body2" sx={{ mt: 2, color: '#666' }}>
+          Would you like to use this existing customer or cancel?
+        </Typography>
+      </DialogContent>
+      <DialogActions sx={{ p: 2 }}>
+        <Button onClick={handleCancelDuplicate} variant="outlined" color="inherit">
+          Cancel
+        </Button>
+        <Button onClick={handleUseExistingCustomer} variant="contained" color="success">
+          Use Existing Customer
+        </Button>
+      </DialogActions>
+    </Dialog>
     </>
   );
 }

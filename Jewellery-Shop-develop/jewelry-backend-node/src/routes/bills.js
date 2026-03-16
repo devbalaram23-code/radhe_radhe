@@ -370,4 +370,27 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Get bills by customer ID
+router.get('/customer/:customerId', async (req, res) => {
+  try {
+    const { customerId } = req.params;
+    const bills = await prisma.bill.findMany({
+      where: {
+        customerId: parseInt(customerId)
+      },
+      include: {
+        billItems: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    res.json(bills);
+  } catch (error) {
+    console.error('Error fetching customer bills:', error);
+    res.status(500).json({ error: 'Failed to fetch customer bills' });
+  }
+});
+
 module.exports = router;
