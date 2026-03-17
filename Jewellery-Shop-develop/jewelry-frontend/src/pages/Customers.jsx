@@ -107,7 +107,7 @@ function Customers() {
   return (
     <>
       <Toaster position="top-right" richColors theme={mode} />
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
+      <Container maxWidth={false} sx={{ mt: 4, mb: 6 }}>
         <Paper sx={{ p: 3, borderRadius: 3 }} elevation={6}>
           <Typography variant="h4" gutterBottom>Customer Management</Typography>
 
