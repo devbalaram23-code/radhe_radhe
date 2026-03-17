@@ -635,7 +635,7 @@ function Billing() {
   return (
     <>
       <Toaster position="top-right" richColors theme={mode} />
-      <Container className="page-billing" maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
+      <Container className="page-billing" maxWidth={false} sx={{ mt: 4, mb: 6 }}>
       <BarcodeListener onBarcode={handleBarcodeScanned} enabled={scannerActive} />
       <Paper sx={{ p: 3, borderRadius: 3 }} elevation={6}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
