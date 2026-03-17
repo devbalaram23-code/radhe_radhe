@@ -3,6 +3,8 @@ import { creditService } from "../services/creditService";
 import CreditForm from "../components/CreditForm";
 import "../pages/Credits.css";
 
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
+
 const Credits = () => {
   const [credits, setCredits] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -38,7 +40,7 @@ const Credits = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/customers");
+      const response = await fetch(`${API_BASE}/api/customers`);
       if (response.ok) {
         const data = await response.json();
         setCustomers(data);
