@@ -17,7 +17,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Grid,
 } from '@mui/material';
 import { toast, Toaster } from 'sonner';
 import './Customers.css';
@@ -37,6 +36,7 @@ function Customers() {
   // Fetch all customers
   useEffect(() => {
     fetchAllCustomers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchAllCustomers = async () => {

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 const BillPreview = ({ bill, onClose }) => {
-  const [viewingPDF, setViewingPDF] = useState(false);
 
   const downloadPDF = async () => {
     if (!bill.pdfData) {

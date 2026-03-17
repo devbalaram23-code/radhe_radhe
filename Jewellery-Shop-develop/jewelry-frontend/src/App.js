@@ -3,7 +3,6 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { ThemeModeProvider, useThemeMode } from './ThemeContext';
 import { getTheme } from './theme';
 import Navbar from "./components/Navbar";
-import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import AddProduct from "./pages/AddProduct";
 import Inventory from "./pages/Inventory";

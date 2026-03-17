@@ -17,10 +17,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import Autocomplete from '@mui/material/Autocomplete';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -37,6 +35,7 @@ function Billing() {
   // Duplicate customer dialog state
   const [duplicateCustomerDialog, setDuplicateCustomerDialog] = useState(false);
   const [duplicateCustomerData, setDuplicateCustomerData] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [duplicateCustomerPending, setDuplicateCustomerPending] = useState(false);
 
   // Customer details
@@ -611,7 +610,7 @@ function Billing() {
 
 
   // Summary calculations - memoized to prevent unnecessary recalculations
-  const { subtotal, totalMaking, totalOther, totalOld, taxableBase, totalGst, grandTotal, roundOff } = useMemo(() => {
+  const { subtotal, totalMaking, totalOther, totalOld, totalGst, grandTotal, roundOff } = useMemo(() => {
     const sub = billItems.reduce((s, it) => s + (it.goldValue || 0), 0);
     const tMaking = billItems.reduce((s, it) => s + (it.makingCharge || 0), 0);
     const tOther = billItems.reduce((s, it) => s + (it.otherCharges || 0), 0);
@@ -627,7 +626,6 @@ function Billing() {
       totalMaking: tMaking,
       totalOther: tOther,
       totalOld: tOld,
-      taxableBase: tBase,
       totalGst: tGst,
       grandTotal: grand,
       roundOff: offset

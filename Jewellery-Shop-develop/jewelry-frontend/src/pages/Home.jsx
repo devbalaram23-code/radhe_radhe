@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
+import {
   Box, 
   Typography, 
   Paper, 
   Grid, 
-  Button,
-  ButtonGroup,
   Card,
   CardContent,
   useTheme
 } from '@mui/material';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, LineChart, Line } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import PriceCalculator from '../components/PriceCalculator';
 import './Home.css';
 
@@ -25,7 +23,6 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState('today');
   const [todayGoldPrice, setTodayGoldPrice] = useState(
     localStorage.getItem('todayGoldPrice') || ''
   );
@@ -36,8 +33,8 @@ const Home = () => {
   const [bestSlide, setBestSlide] = useState(0);
 
   // Market prices (you can make these dynamic by fetching from an API)
+  // eslint-disable-next-line no-unused-vars
   const goldRate = 6458.9;
-  const silverRate = 750;
 
   useEffect(() => {
     fetchData();
@@ -72,7 +69,8 @@ const Home = () => {
     localStorage.setItem('makingChargePerGram', value);
   };
 
-  // Calculate category count
+  // Calculate inventory stats
+  // eslint-disable-next-line no-unused-vars
   const categoryCount = [...new Set(products.map(p => p.category))].length;
 
   // Inventory Quantity by Category
@@ -180,6 +178,7 @@ const Home = () => {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 3);
 
+  // eslint-disable-next-line no-unused-vars
   const recentPurchase = recentSales[0];
 
   const cardPalette = {

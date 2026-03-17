@@ -15,6 +15,7 @@ const Credits = () => {
   useEffect(() => {
     fetchCredits();
     fetchCustomers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const fetchCredits = async () => {

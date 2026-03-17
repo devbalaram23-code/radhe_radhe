@@ -391,8 +391,10 @@ export async function saveBillToStorage(data) {
   }
 }
 
-export default {
+const invoiceExports = {
   generateInvoiceHTML,
   printInvoice,
   saveBillToStorage,
 };
+
+export default invoiceExports;

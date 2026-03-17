@@ -14,6 +14,7 @@ const CreditDetails = () => {
 
   useEffect(() => {
     fetchCreditDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [creditId]);
 
   const fetchCreditDetails = async () => {
